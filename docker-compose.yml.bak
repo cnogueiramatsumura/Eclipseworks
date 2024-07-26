@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+    eclipseDatabase:
+        container_name: elipseDatabase
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+           - 8005:1443 
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=eclipse@1234#
+    eclipseworks:
+        image: ${DOCKER_REGISTRY-}eclipseworks
+        build:
+          context: .
+          dockerfile: Eclipseworks/Dockerfile
+        ports:
+           - 8001:80 
+           - 8002:443         
+        depends_on:
+           - eclipseDatabase
+        environment:
+           - DB_HOST=elipseDatabase
+           - DB_NAME=EclipsDB
+           - DB_SA_PASSWORD=eclipse@1234#

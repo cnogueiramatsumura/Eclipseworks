@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:   
+    eclipseworks:
+        image: ${DOCKER_REGISTRY-}eclipseworks
+        build:
+          context: .
+          dockerfile: Eclipseworks/Dockerfile
+        ports:
+           - 8001:80 
+           - 8002:443       
+        environment:
+           - DB_HOST=elipseDatabase
+           - DB_NAME=EclipsDB
+           - DB_SA_PASSWORD=eclipse@1234#
